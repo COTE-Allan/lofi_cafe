@@ -1,0 +1,170 @@
+@keyframes bounce {
+  10% {
+    transform: scaleY(0.3);
+    /* start by scaling to 30% */
+  }
+
+  30% {
+    transform: scaleY(1);
+    /* scale up to 100% */
+  }
+
+  60% {
+    transform: scaleY(0.5);
+    /* scale down to 50% */
+  }
+
+  80% {
+    transform: scaleY(0.75);
+    /* scale up to 75% */
+  }
+
+  100% {
+    transform: scaleY(0.6);
+    /* scale down to 60% */
+  }
+}
+
+.cassettePlayer {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  z-index: 5;
+  animation: float infinite ease-in-out 10s;
+  border-radius: 25px;
+
+  &-trackTitle {
+    // background-color: red;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 283px;
+    left: 115px;
+    width: 390px;
+    overflow: hidden;
+    & span {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    & .playingIcon {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+
+      &.isPlaying {
+        & span {
+          animation: bounce 2.2s ease infinite alternate;
+        }
+      }
+      & span {
+        width: 3px;
+        height: 100%;
+        background-color: white;
+        border-radius: 3px;
+        transform-origin: bottom;
+        content: "";
+
+        &:nth-of-type(2) {
+          animation-delay: -2.2s;
+          /* Start at the end of animation */
+        }
+
+        &:nth-of-type(3) {
+          animation-delay: -3.7s;
+          /* Start mid-way of return of animation */
+        }
+      }
+
+      &.reversed {
+        & span {
+          background-color: black;
+        }
+      }
+    }
+  }
+
+  &-controller {
+    position: absolute;
+    width: 420px;
+    height: 70px;
+    left: 48.5%;
+    transform: translateX(-50%);
+    bottom: 110px;
+    font-size: 15px;
+  }
+
+  &-button {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 18px;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    &.play {
+      right: 13px;
+    }
+    &.pause {
+      right: 95.5px;
+    }
+    &.next {
+      right: 186px;
+    }
+    &.previous {
+      right: 272px;
+    }
+    &.random {
+      right: 346px;
+    }
+    &.smaller {
+      top: 23px;
+      & svg {
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  .vector {
+    width: 640px;
+    height: 640px;
+    & #cassette-player {
+    }
+    & #Rond {
+      transform-box: fill-box;
+      transform-origin: center;
+      &.isPlaying {
+        animation: rotate infinite linear 2s;
+      }
+    }
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(30px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(10px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(30px) rotate(5deg);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateZ(0);
+  }
+
+  50% {
+    transform: rotateZ(180deg);
+  }
+
+  100% {
+    transform: rotateZ(360deg);
+  }
+}

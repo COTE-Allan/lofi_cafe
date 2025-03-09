@@ -1,0 +1,139 @@
+@import url("https://fonts.cdnfonts.com/css/common-pixel");
+
+.app,
+.bg {
+  width: 100vw;
+  font-family: "Common Pixel", sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+//  Matin
+.morning {
+  background: linear-gradient(to bottom, #d69745, #cc5d2d, #043168);
+}
+
+//  Journée
+.day {
+  background: linear-gradient(to bottom, #68afdb, #278bbd, #092b53);
+}
+
+//  Coucher de soleil
+.sunset {
+  background: linear-gradient(to bottom, #d14c5b, #d36e4f, #e2b059, #092e42);
+}
+
+// Nuit
+.night {
+  background: linear-gradient(to bottom, #001848, #0b3d91, #09203f);
+}
+
+// Soleil
+.sun {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #ffd700, #ffa500);
+  border-radius: 50%;
+  position: absolute;
+  top: 10%;
+  box-shadow: 0 0 100px #ffd700;
+  left: 80%;
+  animation: sun-move 5s linear forwards;
+}
+
+@keyframes sun-move {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// 🌙 Lune
+.moon {
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #f0e68c, #bdb76b);
+  border-radius: 50%;
+  position: absolute;
+  top: 10%;
+  left: 80%;
+  animation: moon-rise 5s ease-in-out forwards;
+  box-shadow: 0 0 30px #bdb76b;
+}
+
+@keyframes moon-rise {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// ✨ Étoiles
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.star {
+  width: 2px;
+  height: 2px;
+  background: white;
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 0 5px white;
+  animation: twinkle 1.5s infinite alternate;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// 🌧 Pluie
+.rain-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.raindrop {
+  width: 1px;
+  height: 75px;
+  background: rgba(173, 216, 230, 0.8);
+  position: absolute;
+  top: -100px;
+  animation: fall linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(120vh);
+  }
+}
+
+.glass-panel {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(5.2px);
+}
