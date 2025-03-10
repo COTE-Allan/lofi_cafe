@@ -1,0 +1,71 @@
+@import url("https://fonts.cdnfonts.com/css/schuboisehandwrite");
+
+.sign {
+  position: absolute;
+  top: -120px;
+  left: 0;
+  z-index: 6;
+  animation: signAnim 15s ease-in-out infinite both;
+  transform-origin: 50% 0;
+  font-family: "SchuboiseHandwrite", sans-serif;
+  &-img {
+    width: 650px;
+  }
+  &-content {
+    position: absolute;
+    top: 220px;
+    transform: rotate(6.5deg);
+    left: 80px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(255, 215, 183);
+    & span {
+      font-size: 20px;
+      opacity: 0.8;
+    }
+    & h1 {
+      font-size: 55px;
+      opacity: 0.8;
+      margin: 5px 0;
+    }
+
+    &-socials {
+      margin-top: 20px;
+      font-size: 40px;
+      display: flex;
+
+      &-item {
+        margin: 0 15px;
+        color: rgb(255, 215, 183);
+        opacity: 0.5;
+        transition: opacity 100ms ease-in-out;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &:nth-child(odd) {
+          transform: rotate(-5deg);
+        }
+
+        &:nth-child(even) {
+          transform: rotate(5deg);
+        }
+      }
+    }
+  }
+}
+
+@keyframes signAnim {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

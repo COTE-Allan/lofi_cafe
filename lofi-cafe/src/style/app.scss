@@ -109,7 +109,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  z-index: 1;
+  z-index: 2;
 }
 
 .raindrop {
@@ -132,8 +132,16 @@
   position: fixed;
   height: 100vh;
   width: 100vw;
-  z-index: 2;
+  z-index: 3;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(0.5px);
-  -webkit-backdrop-filter: blur(5.2px);
+  -webkit-backdrop-filter: blur(0.5px);
+}
+
+.cityBG {
+  position: fixed;
+  bottom: -75px;
+  z-index: 1;
+  width: 100vw;
+  mix-blend-mode: multiply;
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import CityBG from "./assets/city_skyline.png";
 
 function Background() {
   const [rainIntensity, setRainIntensity] = useState(0);
@@ -81,6 +82,7 @@ function Background() {
           />
         ))}
       </div>
+      <img className="cityBG" src={CityBG} alt="city skyline" />
     </div>
   );
 }
