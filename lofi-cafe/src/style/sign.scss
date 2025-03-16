@@ -1,13 +1,24 @@
 @import url("https://fonts.cdnfonts.com/css/schuboisehandwrite");
+@import "./variables.scss";
 
 .sign {
-  position: absolute;
-  top: -120px;
-  left: 0;
-  z-index: 6;
   animation: signAnim 15s ease-in-out infinite both;
   transform-origin: 50% 0;
-  font-family: "SchuboiseHandwrite", sans-serif;
+  &-container {
+    position: absolute;
+    z-index: 6;
+    font-family: "SchuboiseHandwrite", sans-serif;
+
+    transform: scale(0.6);
+    left: -160px;
+    top: -180px;
+    @include for-tablet-landscape-up {
+      left: 0;
+      transform: none;
+      top: -120px;
+    }
+  }
+
   &-img {
     width: 650px;
   }

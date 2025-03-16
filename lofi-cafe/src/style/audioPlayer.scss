@@ -1,3 +1,5 @@
+@import "./variables.scss";
+
 @keyframes bounce {
   10% {
     transform: scaleY(0.3);
@@ -31,9 +33,16 @@
   border-radius: 25px;
   &-container {
     position: absolute;
-    bottom: -40px;
-    left: 300px;
     z-index: 5;
+
+    transform: scale(0.65);
+    left: -125px;
+    bottom: -80px;
+    @include for-tablet-landscape-up {
+      transform: none;
+      bottom: -40px;
+      left: 300px;
+    }
   }
 
   &-trackTitle {
