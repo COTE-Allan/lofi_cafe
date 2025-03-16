@@ -20,9 +20,9 @@ function CassettePlayer({ volumeMusic }) {
   const [index, setIndex] = useState(0);
   const [volume, setVolume] = useState(volumeMusic);
 
-  const [insert] = useSound(insertSfx);
-  const [eject] = useSound(ejectSfx);
-  const [press] = useSound(buttonPressSfx);
+  const [insert] = useSound(insertSfx, { volume: 0.3 });
+  const [eject] = useSound(ejectSfx, { volume: 0.3 });
+  const [press] = useSound(buttonPressSfx, { volume: 0.3 });
 
   const radioList = [
     { name: "lofi hip hop radio", link: "jfKfPfyJRdk" },

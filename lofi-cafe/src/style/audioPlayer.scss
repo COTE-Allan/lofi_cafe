@@ -37,11 +37,16 @@
 
     transform: scale(0.65);
     left: -125px;
-    bottom: -80px;
+    bottom: -140px;
     @include for-tablet-landscape-up {
       transform: none;
       bottom: -40px;
       left: 300px;
+      @include smaller-screens {
+        transform: scale(0.9);
+        bottom: -70px;
+        left: 250px;
+      }
     }
   }
 

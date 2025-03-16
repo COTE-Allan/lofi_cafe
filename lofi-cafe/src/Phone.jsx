@@ -21,7 +21,7 @@ function Phone({ volumeMusic, setVolumeMusic }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [rainPlayer, setRainPlayer] = useState(null);
   const [volumeRain, setVolumeRain] = useState(50); // État pour le volume
-  const [press] = useSound(pressSfx);
+  const [press] = useSound(pressSfx, { volume: 0.3 });
 
   useEffect(() => {
     const interval = setInterval(() => {

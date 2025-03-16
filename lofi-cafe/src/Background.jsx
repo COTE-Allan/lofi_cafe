@@ -9,43 +9,54 @@ function Background() {
   const [showStars, setShowStars] = useState(false);
 
   useEffect(() => {
-    const hour = new Date().getHours();
+    const updateTime = () => {
+      const hour = new Date().getHours();
 
-    // Définir l'intensité de la pluie
-    let intensity;
-    if (hour >= 6 && hour < 12) {
-      intensity = 50;
-    } else if (hour >= 12 && hour < 18) {
-      intensity = 20;
-    } else {
-      intensity = 100;
-    }
-    setRainIntensity(intensity);
+      // Définir l'intensité de la pluie
+      let intensity;
+      if (hour >= 6 && hour < 12) {
+        intensity = 50;
+      } else if (hour >= 12 && hour < 18) {
+        intensity = 20;
+      } else {
+        intensity = 100;
+      }
+      setRainIntensity(intensity);
 
-    // Déterminer la classe CSS selon l'heure
-    let className;
-    if (hour >= 6 && hour < 9) {
-      className = "morning";
-      setShowSun(true);
-      setShowMoon(false);
-      setShowStars(false);
-    } else if (hour >= 9 && hour < 17) {
-      className = "day";
-      setShowSun(true);
-      setShowMoon(false);
-      setShowStars(false);
-    } else if (hour >= 17 && hour < 20) {
-      className = "sunset";
-      setShowSun(true);
-      setShowMoon(false);
-      setShowStars(false);
-    } else {
-      className = "night";
-      setShowSun(false);
-      setShowMoon(true);
-      setShowStars(true);
-    }
-    setTimeClass(className);
+      // Déterminer la classe CSS selon l'heure
+      let className;
+      if (hour >= 6 && hour < 9) {
+        className = "morning";
+        setShowSun(true);
+        setShowMoon(false);
+        setShowStars(false);
+      } else if (hour >= 9 && hour < 17) {
+        className = "day";
+        setShowSun(true);
+        setShowMoon(false);
+        setShowStars(false);
+      } else if (hour >= 17 && hour < 20) {
+        className = "sunset";
+        setShowSun(true);
+        setShowMoon(false);
+        setShowStars(false);
+      } else {
+        className = "night";
+        setShowSun(false);
+        setShowMoon(true);
+        setShowStars(true);
+      }
+      setTimeClass(className);
+    };
+
+    // Mettre à jour immédiatement
+    updateTime();
+
+    // Mettre à jour toutes les 30 secondes
+    const interval = setInterval(updateTime, 30000);
+
+    // Nettoyer l'intervalle lors du démontage du composant
+    return () => clearInterval(interval);
   }, []);
 
   return (
