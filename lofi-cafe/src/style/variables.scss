@@ -33,3 +33,9 @@
     @content;
   }
 }
+
+@mixin bigger-screens {
+  @media (min-height: 1250px) {
+    @content;
+  }
+}

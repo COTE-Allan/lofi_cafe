@@ -47,6 +47,11 @@
         bottom: -70px;
         left: 250px;
       }
+      @include bigger-screens {
+        transform: scale(1.3);
+        bottom: 0px;
+        left: 450px;
+      }
     }
   }
 
