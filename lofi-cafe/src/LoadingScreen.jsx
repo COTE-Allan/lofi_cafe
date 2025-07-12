@@ -1,16 +1,9 @@
-import { useState, useEffect } from "react";
-import "./style/loading.scss";
+import { useCafe } from "./Provider.jsx";
 import BarLoader from "react-spinners/BarLoader";
+import "./style/loading.scss";
 
 function LoadingScreen() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
-
+  const { loading } = useCafe();
   return (
     <div
       className={`loading animate__animated ${
@@ -22,5 +15,4 @@ function LoadingScreen() {
     </div>
   );
 }
-
 export default LoadingScreen;

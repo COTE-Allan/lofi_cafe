@@ -8,17 +8,13 @@ import LoadingScreen from "./LoadingScreen";
 import Sign from "./Sign";
 
 function App() {
-  const [volumeMusic, setVolumeMusic] = useState(50);
   return (
     <div className="app">
       <Sign />
       <LoadingScreen />
       <Background />
-      <CassettePlayer
-        volumeMusic={volumeMusic}
-        setVolumeMusic={setVolumeMusic}
-      />
-      <Phone volumeMusic={volumeMusic} setVolumeMusic={setVolumeMusic} />
+      <CassettePlayer />
+      <Phone />
     </div>
   );
 }

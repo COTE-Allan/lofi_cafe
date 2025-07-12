@@ -1,6 +1,4 @@
 import YouTube from "react-youtube";
-import "./style/audioPlayer.scss";
-import { useState, useEffect } from "react";
 import {
   BsFillPauseFill,
   BsFillPlayFill,
@@ -8,36 +6,33 @@ import {
   BsFillSkipBackwardFill,
 } from "react-icons/bs";
 import { FaRandom } from "react-icons/fa";
-
 import useSound from "use-sound";
 import insertSfx from "./assets/cassette_insert.mp3";
 import ejectSfx from "./assets/cassette_eject.mp3";
 import buttonPressSfx from "./assets/button_press.mp3";
+import "./style/audioPlayer.scss";
+import { useCafe } from "./Provider.jsx";
 
-function CassettePlayer({ volumeMusic }) {
-  const [player, setPlayer] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [volume, setVolume] = useState(volumeMusic);
+function CassettePlayer() {
+  const {
+    volumeMusic,
+    setCassettePlayer,
+    isPlaying,
+    playCassette,
+    pauseCassette,
+    nextRadio,
+    prevRadio,
+    randomRadio,
+    radioList,
+    radioIndex,
+    playerError,
+    setPlayerError,
+    playerErrorCountdown,
+  } = useCafe();
 
   const [insert] = useSound(insertSfx, { volume: 0.3 });
   const [eject] = useSound(ejectSfx, { volume: 0.3 });
   const [press] = useSound(buttonPressSfx, { volume: 0.3 });
-
-  const radioList = [
-    { name: "lofi hip hop radio", link: "jfKfPfyJRdk" },
-    { name: "synthwave radio", link: "4xDzrJKXOOY" },
-    { name: "jazz lofi radio", link: "HuFYqnbVbzY" },
-    { name: "video games lofi radio", link: "XM8bbRA3qio" },
-    { name: "asian lofi radio", link: "Na0w3Mz46GA" },
-  ];
-
-  useEffect(() => {
-    if (player != null) {
-      setVolume(volumeMusic);
-      player.setVolume(volumeMusic);
-    }
-  }, [volumeMusic]);
 
   return (
     <div className="cassettePlayer-container">
@@ -48,12 +43,10 @@ function CassettePlayer({ volumeMusic }) {
               size={50}
               color="white"
               onClick={() => {
-                if (isPlaying) return;
                 insert();
-                player.playVideo();
-                setIsPlaying(true);
+                playCassette();
               }}
-            />
+            />{" "}
             PLAY
           </div>
           <div className="cassettePlayer-button pause">
@@ -61,12 +54,10 @@ function CassettePlayer({ volumeMusic }) {
               size={50}
               color="white"
               onClick={() => {
-                if (!isPlaying) return;
                 eject();
-                player.pauseVideo();
-                setIsPlaying(false);
+                pauseCassette();
               }}
-            />
+            />{" "}
             PAUSE
           </div>
           <div className="cassettePlayer-button next smaller">
@@ -74,15 +65,10 @@ function CassettePlayer({ volumeMusic }) {
               size={40}
               color="white"
               onClick={() => {
-                if (!isPlaying) return;
                 press();
-                if (radioList.length === index + 1) {
-                  setIndex(0);
-                } else {
-                  setIndex(index + 1);
-                }
+                nextRadio();
               }}
-            />
+            />{" "}
             NEXT
           </div>
           <div className="cassettePlayer-button previous smaller">
@@ -90,15 +76,10 @@ function CassettePlayer({ volumeMusic }) {
               size={40}
               color="white"
               onClick={() => {
-                if (!isPlaying) return;
                 press();
-                if (index === 0) {
-                  setIndex(radioList.length - 1);
-                } else {
-                  setIndex(index - 1);
-                }
+                prevRadio();
               }}
-            />
+            />{" "}
             PREV
           </div>
           <div className="cassettePlayer-button random smaller">
@@ -106,18 +87,10 @@ function CassettePlayer({ volumeMusic }) {
               size={40}
               color="white"
               onClick={() => {
-                if (!isPlaying) return;
                 press();
-                let rand = index;
-                while (rand === index) {
-                  rand = Math.round(
-                    Math.random() * (radioList.length - 1 - 0) + 0
-                  );
-                }
-                console.log(rand);
-                setIndex(rand);
+                randomRadio();
               }}
-            />
+            />{" "}
             RANDOM
           </div>
         </div>
@@ -128,12 +101,29 @@ function CassettePlayer({ volumeMusic }) {
             <span />
           </div>
           {isPlaying ? (
-            <span>Now playing : {radioList[index].name}</span>
+            playerError ? (
+              <span> Radio offline, swapping in {playerErrorCountdown}...</span>
+            ) : (
+              <span>Now playing : {radioList[radioIndex].name}</span>
+            )
           ) : (
             <span>Press something to start...</span>
           )}
         </div>
-        {/* CACHER CETTE MERDE */}
+        <YouTube
+          key={radioIndex}
+          style={{ display: "none" }}
+          className="iframeYoutube"
+          videoId={radioList[radioIndex].link}
+          opts={{ width: 0, height: 0, playerVars: { autoplay: 0 } }}
+          onReady={(e) => {
+            setCassettePlayer(e.target);
+            setPlayerError(false);
+            if (isPlaying) e.target.playVideo();
+          }}
+          onError={(e) => setPlayerError(true)}
+        />
+
         <svg
           width="600"
           height="600"
@@ -1646,21 +1636,8 @@ function CassettePlayer({ volumeMusic }) {
             />
           </defs>
         </svg>
-
-        <YouTube
-          videoId={radioList[index].link}
-          key={index}
-          style={{ display: "none" }}
-          className="iframeYoutube"
-          onReady={(e) => {
-            setPlayer(e.target);
-            e.target.setVolume(volumeMusic);
-            if (isPlaying) e.target.playVideo();
-          }}
-        />
       </div>
     </div>
   );
 }
-
 export default CassettePlayer;

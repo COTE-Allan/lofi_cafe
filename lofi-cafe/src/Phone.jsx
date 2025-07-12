@@ -1,83 +1,25 @@
-import { useState, useEffect } from "react";
+import { useCafe } from "./Provider.jsx";
 import PhoneIMG from "./assets/phone.svg";
-import "./style/phone.scss";
 import { FaCloud, FaCloudRain } from "react-icons/fa";
-import {
-  BiFullscreen,
-  BiExitFullscreen,
-  BiVolume,
-  BiVolumeFull,
-} from "react-icons/bi";
+import { BiFullscreen, BiExitFullscreen, BiVolumeFull } from "react-icons/bi";
 import YouTube from "react-youtube";
-import useSound from "use-sound";
-import pressSfx from "./assets/interface_press.mp3";
-import Slider from "rc-slider"; // Nouveau slider
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
-import "rc-slider/assets/index.css"; // Import des styles du slider
-
-function Phone({ volumeMusic, setVolumeMusic }) {
-  const [dateTime, setDateTime] = useState(new Date());
-  const [rainMode, setRainMode] = useState(false);
-  const [fullscreen, setFullscreen] = useState(false);
-  const [rainPlayer, setRainPlayer] = useState(null);
-  const [volumeRain, setVolumeRain] = useState(50); // État pour le volume
-  const [press] = useSound(pressSfx, { volume: 0.3 });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDateTime(new Date());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    function handleFullscreenChange() {
-      setFullscreen(document.fullscreenElement !== null);
-    }
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
-    return () =>
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
-  }, []);
-
-  const toggleFullscreen = () => {
-    press();
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch((err) => {
-        console.error("Erreur lors de l'activation du plein écran :", err);
-      });
-    } else {
-      document.exitFullscreen();
-    }
-  };
-
-  const formattedTime = dateTime.toLocaleTimeString("fr-FR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-
-  const formattedDate = dateTime.toLocaleDateString("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-
-  useEffect(() => {
-    if (rainPlayer) {
-      if (rainMode) {
-        rainPlayer.playVideo();
-      } else {
-        rainPlayer.pauseVideo();
-      }
-    }
-  }, [rainMode]);
-
-  useEffect(() => {
-    if (rainPlayer) {
-      rainPlayer.setVolume(volumeRain);
-    }
-  }, [volumeRain]);
+function Phone() {
+  const {
+    formattedTime,
+    formattedDate,
+    rainMode,
+    setRainMode,
+    fullscreen,
+    toggleFullscreen,
+    volumeMusic,
+    setVolumeMusic,
+    volumeRain,
+    setVolumeRain,
+    setRainPlayer,
+  } = useCafe();
 
   return (
     <div className="phone-container">
@@ -90,10 +32,7 @@ function Phone({ volumeMusic, setVolumeMusic }) {
         <div className="phone-control">
           <div
             className="phone-control-button weather"
-            onClick={() => {
-              press();
-              setRainMode(!rainMode);
-            }}
+            onClick={() => setRainMode(!rainMode)}
           >
             {rainMode ? <FaCloudRain size={40} /> : <FaCloud size={40} />}
             Rain sounds {rainMode ? "on" : "off"}
@@ -116,9 +55,9 @@ function Phone({ volumeMusic, setVolumeMusic }) {
               </p>
               <Slider
                 min={0}
-                max={100}
+                max={80}
                 value={volumeMusic}
-                onChange={(value) => setVolumeMusic(value)}
+                onChange={setVolumeMusic}
                 trackStyle={{ backgroundColor: "#fff", height: 7 }}
                 handleStyle={{
                   borderColor: "#fff",
@@ -136,7 +75,7 @@ function Phone({ volumeMusic, setVolumeMusic }) {
                 min={0}
                 max={100}
                 value={volumeRain}
-                onChange={(value) => setVolumeRain(value)}
+                onChange={setVolumeRain}
                 trackStyle={{ backgroundColor: "#fff", height: 7 }}
                 handleStyle={{
                   borderColor: "#fff",
@@ -148,20 +87,14 @@ function Phone({ volumeMusic, setVolumeMusic }) {
             </div>
           </div>
         </div>
-
         <YouTube
           videoId="-OekvEFm1lo"
           style={{ display: "none" }}
           className="iframeYoutube"
-          onReady={(e) => {
-            setRainPlayer(e.target);
-            e.target.setVolume(volumeRain);
-            if (rainMode) e.target.playVideo();
-          }}
+          onReady={(e) => setRainPlayer(e.target)}
         />
       </div>
     </div>
   );
 }
-
 export default Phone;

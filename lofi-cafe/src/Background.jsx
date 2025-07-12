@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import CityBG from "./assets/city_skyline.png";
+import { useCafe } from "./Provider.jsx";
 
 function Background() {
+  const { rainMode } = useCafe();
   const [rainIntensity, setRainIntensity] = useState(0);
   const [timeClass, setTimeClass] = useState("");
   const [showSun, setShowSun] = useState(false);
   const [showMoon, setShowMoon] = useState(false);
   const [showStars, setShowStars] = useState(false);
+  const [showClouds, setShowClouds] = useState(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -30,16 +33,19 @@ function Background() {
         setShowSun(true);
         setShowMoon(false);
         setShowStars(false);
+        setShowClouds(true);
       } else if (hour >= 9 && hour < 17) {
         className = "day";
         setShowSun(true);
         setShowMoon(false);
         setShowStars(false);
+        setShowClouds(true);
       } else if (hour >= 17 && hour < 20) {
         className = "sunset";
         setShowSun(true);
         setShowMoon(false);
         setShowStars(false);
+        setShowClouds(true);
       } else {
         className = "night";
         setShowSun(false);
@@ -79,20 +85,45 @@ function Background() {
           ))}
         </div>
       )}
+      {showClouds && (
+        <div className="clouds">
+          <div class="x1">
+            <div class="cloud"></div>
+          </div>
+
+          <div class="x2">
+            <div class="cloud"></div>
+          </div>
+
+          <div class="x3">
+            <div class="cloud"></div>
+          </div>
+
+          <div class="x4">
+            <div class="cloud"></div>
+          </div>
+
+          <div class="x5">
+            <div class="cloud"></div>
+          </div>
+        </div>
+      )}
       <div className="glass-panel"></div>
-      <div className="rain-container">
-        {Array.from({ length: rainIntensity }).map((_, index) => (
-          <div
-            key={index}
-            className="raindrop"
-            style={{
-              left: `${Math.random() * 100}vw`,
-              animationDuration: `${Math.random() * 1 + 0.5}s`,
-              animationDelay: `${Math.random()}s`,
-            }}
-          />
-        ))}
-      </div>
+      {rainMode && (
+        <div className="rain-container">
+          {Array.from({ length: rainIntensity }).map((_, index) => (
+            <div
+              key={index}
+              className="raindrop"
+              style={{
+                left: `${Math.random() * 100}vw`,
+                animationDuration: `${Math.random() * 1 + 0.5}s`,
+                animationDelay: `${Math.random()}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
       <img className="cityBG" src={CityBG} alt="city skyline" />
     </div>
   );
