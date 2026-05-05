@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import CityBG from "./assets/city_skyline.png";
 import { useCafe } from "./Provider.jsx";
 
@@ -10,6 +10,15 @@ function Background() {
   const [showMoon, setShowMoon] = useState(false);
   const [showStars, setShowStars] = useState(false);
   const [showClouds, setShowClouds] = useState(false);
+
+  const stars = useMemo(() => {
+    return Array.from({ length: 100 }).map(() => ({
+      top: `${Math.random() * 100}vh`,
+      left: `${Math.random() * 100}vw`,
+      animationDuration: `${Math.random() * 3 + 1}s`,
+      animationDelay: `${Math.random()}s`,
+    }));
+  }, []);
 
   useEffect(() => {
     const updateTime = () => {
@@ -71,40 +80,32 @@ function Background() {
       {showMoon && <div className="moon"></div>}
       {showStars && (
         <div className="stars">
-          {Array.from({ length: 100 }).map((_, index) => (
-            <div
-              key={index}
-              className="star"
-              style={{
-                top: `${Math.random() * 100}vh`,
-                left: `${Math.random() * 100}vw`,
-                animationDuration: `${Math.random() * 3 + 1}s`,
-                animationDelay: `${Math.random()}s`,
-              }}
-            />
+          {stars.map((star, index) => (
+            <div key={index} className="star" style={star} />
           ))}
         </div>
       )}
+
       {showClouds && (
         <div className="clouds">
-          <div class="x1">
-            <div class="cloud"></div>
+          <div className="x1">
+            <div className="cloud"></div>
           </div>
 
-          <div class="x2">
-            <div class="cloud"></div>
+          <div className="x2">
+            <div className="cloud"></div>
           </div>
 
-          <div class="x3">
-            <div class="cloud"></div>
+          <div className="x3">
+            <div className="cloud"></div>
           </div>
 
-          <div class="x4">
-            <div class="cloud"></div>
+          <div className="x4">
+            <div className="cloud"></div>
           </div>
 
-          <div class="x5">
-            <div class="cloud"></div>
+          <div className="x5">
+            <div className="cloud"></div>
           </div>
         </div>
       )}
