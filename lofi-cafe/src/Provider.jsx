@@ -8,11 +8,13 @@ const dummyPlayer = {
 };
 
 const radioList = [
-  { name: "lofi hip hop radio", link: "jfKfPfyJRdk" },
+  { name: "lofi hip hop radio", link: "EWrX250Zhko" },
   { name: "synthwave radio", link: "4xDzrJKXOOY" },
-  { name: "jazz lofi radio", link: "HuFYqnbVbzY" },
-  { name: "video games lofi radio", link: "GluJS2IAe_s" },
-  { name: "asian lofi radio", link: "Na0w3Mz46GA" },
+  { name: "jazz lofi radio", link: "A8jDx9TLMQc" },
+  { name: "video games lofi radio", link: "WGfMj5o4s1k" },
+  { name: "halloween lofi radio", link: "3GQY80jyysQ" },
+  { name: "medieval lofi radio", link: "IxPANmjPaek" },
+  { name: "chiptune radio", link: "zBvjLD7P6XE" },
 ];
 
 const CafeContext = createContext();
